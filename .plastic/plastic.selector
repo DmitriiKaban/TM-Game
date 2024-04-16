@@ -1,0 +1,4 @@
+repository "2D by tutorial@dima16kravchenko@cloud"
+  path "/"
+    br "/main"
+    co "/main"
