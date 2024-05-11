@@ -15,7 +15,7 @@ TagManager:
   - SolidObjects
   - BattleZone
   - Interactable
-  - 
+  - SolidObjects2.0
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Solid2.0
+    uniqueID: 1958304279
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

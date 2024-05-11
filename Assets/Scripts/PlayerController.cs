@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask solidObjectsLayer; 
     public LayerMask interactableLayer;
     public LayerMask battleLayer;
+    public LayerMask solidObjectLayer2;
 
     private void Awake()
     {
@@ -108,6 +109,11 @@ public class PlayerController : MonoBehaviour
     private bool IsWalkable(Vector3 targetPos)
     {
         if (Physics2D.OverlapCircle(targetPos, 0.05f, solidObjectsLayer | interactableLayer) != null)
+        {
+            return false;
+        }
+        
+        if (Physics2D.OverlapCircle(targetPos, 0.05f, solidObjectLayer2) != null)
         {
             return false;
         }
