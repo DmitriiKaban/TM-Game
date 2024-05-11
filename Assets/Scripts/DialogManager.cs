@@ -6,24 +6,26 @@ using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour
 {
-    [SerializeField] private GameObject dialogBox;
-    [SerializeField] private Text dialogText;
-    [SerializeField] private int lettersPerSecond;
+    [SerializeField] GameObject dialogBox;
+    [SerializeField] Text dialogText;
+    [SerializeField] int lettersPerSecond;
     public event Action OnShowDialog;
     public event Action OnHideDialog;
     
-    private Dialog dialog;
-    private int currentLine = 0;
-    private bool isTyping;
+    Dialog dialog;
+    int currentLine = 0;
+    bool isTyping = false;
     public static DialogManager Instance { get; private set; } // making it public to other classes
 
     private void Awake()
     {
+        Debug.Log("AWAKE DIALOG MANAGER!");
         Instance = this;
     }
 
     public void HandleUpdate()
     {
+        Debug.Log("HANDLE UPDATE DIALOG MANAGER!");
         if (Input.GetKeyDown(KeyCode.Z) && !isTyping)
         {
             ++currentLine;

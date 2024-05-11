@@ -68,13 +68,15 @@ public class PlayerController : MonoBehaviour
 
     void Interact()
     {
+        Debug.Log("PLAYER INTERACT METHOD");
         Vector3 facingDir = new Vector3(animator.GetFloat("moveX"), animator.GetFloat("moveY"));
         Vector3 interactPos = transform.position + facingDir;
 
         // Debug.DrawLine(transform.position, interactPos, Color.red, 2f);
-        var collider = Physics2D.OverlapCircle(interactPos, 0.2f, interactableLayer);
+        var collider = Physics2D.OverlapCircle(interactPos, 0.3f, interactableLayer);
         if (collider != null)
         {
+            Debug.Log("SHOULD INTERACT HERE!!!!");
             collider.GetComponent<Interactable>()?.Interact();
         }
         

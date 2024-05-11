@@ -5,7 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class Dialog
 {
-    [SerializeField] private List<string> lines;
+    [SerializeField] List<string> lines;
 
-    public List<string> Lines => lines; // getter
+    public List<string> Lines
+    {
+        get { return lines; }
+    }
 }

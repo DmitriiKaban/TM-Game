@@ -6,8 +6,8 @@ using UnityEngine;
 public enum GameState {FreeRoam, Dialog, Battle}
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private PlayerController playerController; // access from Unity
-    private GameState state;
+    [SerializeField] PlayerController playerController; // access from Unity
+    GameState state;
 
     private void Start()
     {
@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
             
         } else if (state == GameState.Dialog)
         {
+            Debug.Log("GAME STATE IS DIALOG!!!!");
             DialogManager.Instance.HandleUpdate();
             
         } else if (state == GameState.Battle)
