@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float moveSpeed;
     private bool isMoving;
-    private bool isAtacking = false;
+    private bool isAttacking = false;
     private Vector2 input;
     private Animator animator;
     public LayerMask solidObjectsLayer; 
     public LayerMask interactableLayer;
     public LayerMask battleLayer;
     public LayerMask solidObjectLayer2;
+    private GameObject currentTeleporter;
 
     private void Awake()
     {
@@ -21,6 +25,16 @@ public class PlayerController : MonoBehaviour
     
     public void HandleUpdate()
     {
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Hey");
+            if (currentTeleporter != null)
+            {
+                transform.position = currentTeleporter.GetComponent<Teleporters>().GetDestination().position;
+            }
+        }
+        
         if (!isMoving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
@@ -53,16 +67,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             // Set isAtacking to true to start the attack animation
-            isAtacking = true;
-            animator.SetBool("isAtacking", isAtacking);
+            isAttacking = true;
+            animator.SetBool("isAtacking", isAttacking);
         }
 
         // Check if the attack key is released
         if (Input.GetKeyUp(KeyCode.X))
         {
             // Set isAtacking to false to stop the attack animation
-            isAtacking = false;
-            animator.SetBool("isAtacking", isAtacking);
+            isAttacking = false;
+            animator.SetBool("isAtacking", isAttacking);
         }
     }
 
@@ -104,6 +118,28 @@ public class PlayerController : MonoBehaviour
             if (Random.Range(1, 100) <= 50)
             {
                 Debug.Log("A battle has started!");
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Trigger");
+        isMoving = false;
+        StopAllCoroutines();
+        if (other.CompareTag("Teleporter"))
+        {
+            currentTeleporter = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Teleporter"))
+        {
+            if (other.gameObject == currentTeleporter)
+            {
+                currentTeleporter = null;
             }
         }
     }
