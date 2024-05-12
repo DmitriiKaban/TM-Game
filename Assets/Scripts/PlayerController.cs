@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed;
     private bool isMoving;
-    private bool isAtacking = false;
+    private bool isAttacking = false;
     private Vector2 input;
     private Animator animator;
     public LayerMask solidObjectsLayer; 
@@ -25,6 +25,16 @@ public class PlayerController : MonoBehaviour
     
     public void HandleUpdate()
     {
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Hey");
+            if (currentTeleporter != null)
+            {
+                transform.position = currentTeleporter.GetComponent<Teleporters>().GetDestination().position;
+            }
+        }
+        
         if (!isMoving)
         {
             input.x = Input.GetAxisRaw("Horizontal");
@@ -57,16 +67,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             // Set isAtacking to true to start the attack animation
-            isAtacking = true;
-            animator.SetBool("isAtacking", isAtacking);
+            isAttacking = true;
+            animator.SetBool("isAtacking", isAttacking);
         }
 
         // Check if the attack key is released
         if (Input.GetKeyUp(KeyCode.X))
         {
             // Set isAtacking to false to stop the attack animation
-            isAtacking = false;
-            animator.SetBool("isAtacking", isAtacking);
+            isAttacking = false;
+            animator.SetBool("isAtacking", isAttacking);
         }
     }
 
@@ -99,15 +109,6 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
 
         CheckForEncounters();
-        
-        // if (Input.GetKeyDown(KeyCode.E))
-        // {
-            // Debug.Log("Teleport");
-            if (currentTeleporter != null)
-            {
-                transform.position = currentTeleporter.GetComponent<Teleporters>().GetDestination().position;
-            }
-        // }
     }
 
     private void CheckForEncounters()
@@ -121,19 +122,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Teleporter");
-        if (collision.CompareTag("Teleporter"))
+        Debug.Log("Trigger");
+        if (other.CompareTag("Teleporter"))
         {
-            currentTeleporter = collision.gameObject;
+            currentTeleporter = other.gameObject;
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.CompareTag("Teleporter"))
+        if (other.CompareTag("Teleporter"))
         {
-            if (collision.gameObject == currentTeleporter)
+            if (other.gameObject == currentTeleporter)
             {
                 currentTeleporter = null;
             }
