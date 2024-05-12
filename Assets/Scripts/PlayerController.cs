@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float moveSpeed;
     private bool isMoving;
     private bool isAtacking = false;
@@ -13,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask interactableLayer;
     public LayerMask battleLayer;
     public LayerMask solidObjectLayer2;
+    public LayerMask teleportLayer;
 
     private void Awake()
     {
@@ -95,6 +99,7 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
 
         CheckForEncounters();
+        CheckForTeleport();
     }
 
     private void CheckForEncounters()
@@ -105,6 +110,14 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("A battle has started!");
             }
+        }
+    }
+
+    private void CheckForTeleport()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 0.001f, teleportLayer) != null)
+        {
+            Debug.Log("A teleporter!");
         }
     }
 
