@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask interactableLayer;
     public LayerMask battleLayer;
     public LayerMask solidObjectLayer2;
-    public LayerMask teleportLayer;
+    private GameObject currentTeleporter;
 
     private void Awake()
     {
@@ -99,7 +99,15 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
 
         CheckForEncounters();
-        CheckForTeleport();
+        
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+            // Debug.Log("Teleport");
+            if (currentTeleporter != null)
+            {
+                transform.position = currentTeleporter.GetComponent<Teleporters>().GetDestination().position;
+            }
+        // }
     }
 
     private void CheckForEncounters()
@@ -113,11 +121,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CheckForTeleport()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Physics2D.OverlapCircle(transform.position, 0.001f, teleportLayer) != null)
+        Debug.Log("Teleporter");
+        if (collision.CompareTag("Teleporter"))
         {
-            Debug.Log("A teleporter!");
+            currentTeleporter = collision.gameObject;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Teleporter"))
+        {
+            if (collision.gameObject == currentTeleporter)
+            {
+                currentTeleporter = null;
+            }
         }
     }
 
