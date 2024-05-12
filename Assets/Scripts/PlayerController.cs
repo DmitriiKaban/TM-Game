@@ -125,6 +125,8 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Trigger");
+        isMoving = false;
+        StopAllCoroutines();
         if (other.CompareTag("Teleporter"))
         {
             currentTeleporter = other.gameObject;
