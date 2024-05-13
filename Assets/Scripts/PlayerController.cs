@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask interactableLayer;
     public LayerMask battleLayer;
     public LayerMask solidObjectLayer2;
+    public LayerMask gemsLayer;
     private GameObject currentTeleporter;
 
     private void Awake()
@@ -151,7 +152,7 @@ public class PlayerController : MonoBehaviour
             return false;
         }
         
-        if (Physics2D.OverlapCircle(targetPos, 0.05f, solidObjectLayer2) != null)
+        if (Physics2D.OverlapCircle(targetPos, 0.05f, solidObjectLayer2 | gemsLayer) != null)
         {
             return false;
         }

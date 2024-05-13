@@ -17,7 +17,7 @@ TagManager:
   - BattleZone
   - Interactable
   - SolidObjects2.0
-  - Teleporter
+  - Gems
   - 
   - 
   - 
@@ -53,4 +53,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 871199165
+    locked: 0
+  - name: Gems
+    uniqueID: 3137926367
     locked: 0
