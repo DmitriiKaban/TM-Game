@@ -23,6 +23,7 @@ public class PortalController : MonoBehaviour
         {
             Debug.Log("Teleport2c");
             player.transform.position = destination.transform.position;
+            player.GetComponent<PlayerController>().HandleTeleport();
         }
     }
 

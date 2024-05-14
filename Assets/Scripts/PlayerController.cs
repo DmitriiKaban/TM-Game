@@ -26,15 +26,25 @@ public class PlayerController : MonoBehaviour
     public LayerMask gemsLayer;
     private GameObject currentTeleporter;
 
+    public void SetIsMoving(bool b)
+    {
+        isMoving = b;
+    }
+
     private void Awake()
     {
         ic = GetComponent<InventoryClass>();
         animator = GetComponent<Animator>();
     }
+
+    public void HandleTeleport()
+    {
+        isMoving = false;
+        StopAllCoroutines();
+    }
     
     public void HandleUpdate()
     {
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Hey");
@@ -46,6 +56,7 @@ public class PlayerController : MonoBehaviour
         
         if (!isMoving)
         {
+            Debug.Log("not");
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");   
 

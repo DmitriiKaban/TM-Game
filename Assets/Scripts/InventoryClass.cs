@@ -377,7 +377,114 @@ public class InventoryClass : MonoBehaviour
 
     private void RemovePieces(Jewelry jew)
     {
-        
+        switch (jew.GetJewelryType())
+        {
+            case JewelryType.Necklace:
+                switch (jew.GetOre())
+                {
+                    case Ore.Silver:
+                        inventory.SilverIngotsAmount -= 3;
+                        break;
+                    case Ore.Gold:
+                        inventory.GoldIngotsAmount -= 3;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                switch (jew.GetGem())
+                {
+                    case Gem.Diamond:
+                        inventory.DiamondShapedAmount -= 5;
+                        break;
+                    case Gem.Ruby:
+                        inventory.RubyShapedAmount -= 5;
+                        break;
+                    case Gem.Sapphire:
+                        inventory.SapphireShapedAmount -= 5;
+                        break;
+                    case Gem.Emerald:
+                        inventory.EmeraldShapedAmount -= 5;
+                        break;
+                    case Gem.Amethyst:
+                        inventory.AmethystShapedAmount -= 5;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                break;
+            case JewelryType.Ring:
+                switch (jew.GetOre())
+                {
+                    case Ore.Silver:
+                        inventory.SilverIngotsAmount -= 2;
+                        break;
+                    case Ore.Gold:
+                        inventory.GoldIngotsAmount -= 2;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                switch (jew.GetGem())
+                {
+                    case Gem.Diamond:
+                        inventory.DiamondShapedAmount -= 2;
+                        break;
+                    case Gem.Ruby:
+                        inventory.RubyShapedAmount -= 2;
+                        break;
+                    case Gem.Sapphire:
+                        inventory.SapphireShapedAmount -= 2;
+                        break;
+                    case Gem.Emerald:
+                        inventory.EmeraldShapedAmount -= 2;
+                        break;
+                    case Gem.Amethyst:
+                        inventory.AmethystShapedAmount -= 2;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                break;
+            case JewelryType.Earrings:
+                switch (jew.GetOre())
+                {
+                    case Ore.Silver:
+                        inventory.SilverIngotsAmount -= 2;
+                        break;
+                    case Ore.Gold:
+                        inventory.GoldIngotsAmount -= 2;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                switch (jew.GetGem())
+                {
+                    case Gem.Diamond:
+                        inventory.DiamondShapedAmount -= 4;
+                        break;
+                    case Gem.Ruby:
+                        inventory.RubyShapedAmount -= 4;
+                        break;
+                    case Gem.Sapphire:
+                        inventory.SapphireShapedAmount -= 4;
+                        break;
+                    case Gem.Emerald:
+                        inventory.EmeraldShapedAmount -= 4;
+                        break;
+                    case Gem.Amethyst:
+                        inventory.AmethystShapedAmount -= 4;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        UpdateTexts();
     }
     private int GetShapedGemAmount(Gem gem)
     {
