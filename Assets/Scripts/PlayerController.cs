@@ -1,17 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
 
     public float moveSpeed;
+    [SerializeField] private float gemRadius;
+    [SerializeField] private Tilemap gemTilemap;
+    [SerializeField] private TileBase gemTile;
+    [SerializeField] private GameObject inventoryGO;
     private bool isMoving;
     private bool isAttacking = false;
     private Vector2 input;
     private Animator animator;
+    private InventoryClass ic;
     public LayerMask solidObjectsLayer; 
     public LayerMask interactableLayer;
     public LayerMask battleLayer;
@@ -21,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        ic = GetComponent<InventoryClass>();
         animator = GetComponent<Animator>();
     }
     
@@ -65,10 +73,20 @@ public class PlayerController : MonoBehaviour
             Interact();
         }
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryGO.SetActive(!inventoryGO.activeSelf);
+        }
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             // Set isAtacking to true to start the attack animation
             isAttacking = true;
+            var pos = new Vector3Int((int)transform.position.x, (int)transform.position.y - 1, 0);
+           // Debug.Log(pos);
+            gemTile = gemTilemap.GetTile(pos);
+            if(gemTile != null) 
+                ic.Dig(gemTile.name.Last());
             animator.SetBool("isAtacking", isAttacking);
         }
 
@@ -152,7 +170,7 @@ public class PlayerController : MonoBehaviour
             return false;
         }
         
-        if (Physics2D.OverlapCircle(targetPos, 0.2f, gemsLayer) != null)
+        if (Physics2D.OverlapCircle(targetPos, gemRadius, gemsLayer) != null)
         {
             return false;
         }

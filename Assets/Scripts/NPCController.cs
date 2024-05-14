@@ -9,5 +9,6 @@ public class NPCController : MonoBehaviour, Interactable
     {
         Debug.Log("Interact with NPC!!!!!");
         StartCoroutine(DialogManager.Instance.ShowDialog(dialog));
+        
     }
 }

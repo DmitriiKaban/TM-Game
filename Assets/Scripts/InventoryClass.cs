@@ -50,6 +50,19 @@ public enum JewelryType
     Earrings
 }
 
+public enum JP
+{
+    Gold,
+    Silver,
+    Diamond,
+    Ruby,
+    Sapphire,
+    Emerald,
+    Amethyst,
+    Necklace,
+    Ring,
+    Earrings
+}
 public class Jewelry
 {
     private int id;
@@ -93,6 +106,17 @@ public static class JewelryStockClass
     public static List<Jewelry> AllJewelries;
     public static List<int> AllPrices = new List<int>()
         {100, 80, 70, 70, 60, 75, 65, 55, 55, 50, 50, 45, 40, 40, 35, 40, 35, 30, 30, 25, 75, 65, 60, 60, 55, 60, 55, 50, 50, 45};
+
+    public static int GetPrice(Ore ore, Gem gem, JewelryType jewelryType)
+    {
+        foreach (var jew in AllJewelries)
+        {
+            if (jew.GetOre() == ore && jew.GetGem() == gem && jew.GetJewelryType() == jewelryType)
+                return jew.GetPrice();
+        }
+
+        return -1;
+    }
 }
 
 public class JewelryStock : MonoBehaviour
@@ -177,55 +201,66 @@ public class InventoryClass : MonoBehaviour
     private Inventory inventory;
 
     private List<Jewelry> availableJewelry = new List<Jewelry>();
+
+    private JP lastPiece;
+    private Gem currentGem;
+    private Ore currentOre;
+    private JewelryType currentType;
     // Start is called before the first frame update
     void Start()
     {
+        lastPiece = JP.Gold;
+        currentOre = Ore.Gold;
+        currentGem = Gem.Diamond;
+        currentType = JewelryType.Necklace;
         inventory = new Inventory
         {
             MaxSpace = 10
         };
     }
 
-    public void Dig(object obj)
+    public void Dig(char c)
     {
-        switch (obj.ToString())
+        if(inventory.Space == inventory.MaxSpace)
+            return;
+        switch (c)
         {
-            case "Diamond":
+            case '2':
                 {
                     inventory.DiamondAmount++;
                 }
                 break;
             case 
-                "Ruby":
+                '3':
                 {
                     inventory.RubyAmount++;
                 }
                 break;
             case 
-                "Sapphire":
+                '4':
                 {
                     inventory.SapphireAmount++;
                 }
                 break;
             case 
-                "Emerald":
+                '5':
                 {
                     inventory.EmeraldAmount++;
                 }
                 break;
             case 
-                "Amethyst":
+                '6':
                 {
                     inventory.AmethystAmount++;
                 }
                 break;
             case 
-                "Gold":
+                '7':
                 {
                     inventory.GoldAmount++;
                 }
                 break;
-            case "Silver":
+            case '0':
                 {
                     inventory.SilverAmount++;
                 }
@@ -242,12 +277,61 @@ public class InventoryClass : MonoBehaviour
             inventory.Money += jew.GetPrice();
         }   
     }
-    public void Craft(object obj)
+
+    public void Choise(int n)
     {
-        if (obj.GetType() == typeof(Jewelry))
+        switch (n)
         {
-            Jewelry jew = (Jewelry)obj;
-            switch (jew.GetJewelryType())
+            case 0:
+                currentOre = Ore.Silver;
+                lastPiece = JP.Silver;
+                break;
+
+            case 7:
+                currentOre = Ore.Gold;
+                lastPiece = JP.Gold;
+                break;
+
+            case 2:
+                currentGem = Gem.Diamond;
+                lastPiece = JP.Diamond;
+                break;
+            case 3:
+                currentGem = Gem.Ruby;
+                lastPiece = JP.Ruby;
+                break;
+            case 4:
+                currentGem = Gem.Sapphire;
+                lastPiece = JP.Sapphire;
+                break;
+            case 5:
+                currentGem = Gem.Emerald;
+                lastPiece = JP.Emerald;
+                break;
+            case 6:
+                currentGem = Gem.Amethyst;
+                lastPiece = JP.Amethyst;
+                break;
+            case 8:
+                currentType = JewelryType.Necklace;
+                break;
+            case 9:
+                currentType = JewelryType.Earrings;
+                break; 
+            case 1:
+                currentType = JewelryType.Ring;
+                break;
+
+           
+
+        }
+    }
+
+    public void CraftJew()
+    {
+        {
+            Jewelry jew = new Jewelry(-1, JewelryStockClass.GetPrice(currentOre, currentGem, currentType), currentOre, currentGem, currentType);
+            switch (currentType)
             {
                 case JewelryType.Necklace:
                     if (GetShapedGemAmount(jew.GetGem()) >= 5 && GetOreIngotsAmount(jew.GetOre()) >= 3)
@@ -274,9 +358,12 @@ public class InventoryClass : MonoBehaviour
                     throw new ArgumentOutOfRangeException();
             }
         }
-        switch (obj.ToString())
+    }
+    public void Craft()
+    {
+        switch (lastPiece)
         {
-            case "Diamond":
+            case JP.Diamond:
                 if (inventory.DiamondAmount > 0)
                 {
                     inventory.DiamondAmount--;
@@ -284,7 +371,7 @@ public class InventoryClass : MonoBehaviour
                 }
                 break;
                 case 
-                "Ruby":
+                JP.Ruby:
                     if (inventory.RubyAmount > 0)
                     {
                         inventory.RubyAmount--;
@@ -292,7 +379,7 @@ public class InventoryClass : MonoBehaviour
                     }
                     break;
                case 
-                   "Sapphire":
+                   JP.Sapphire :
                    if (inventory.SapphireAmount > 0)
                    {
                        inventory.SapphireAmount--;
@@ -300,7 +387,7 @@ public class InventoryClass : MonoBehaviour
                    }
                    break;
                 case 
-                   "Emerald":
+                   JP.Emerald :
                     if (inventory.EmeraldAmount > 0)
                     {
                         inventory.EmeraldAmount--;
@@ -308,7 +395,7 @@ public class InventoryClass : MonoBehaviour
                     }
                 break;
                 case 
-                "Amethyst":
+                JP.Amethyst :
                     if (inventory.AmethystAmount > 0)
                     {
                         inventory.AmethystAmount--;
@@ -316,14 +403,14 @@ public class InventoryClass : MonoBehaviour
                     }
                     break;
                 case 
-                "Gold":
+                JP.Gold:
                     if (inventory.GoldAmount > 0)
                     {
                         inventory.GoldAmount--;
                         inventory.GoldIngotsAmount += 2;
                     }
                     break;
-                case "Silver":
+                case JP.Silver:
                 if (inventory.SilverAmount > 0)
                 {
                     inventory.SilverAmount--;
