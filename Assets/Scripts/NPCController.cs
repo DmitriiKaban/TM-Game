@@ -11,5 +11,38 @@ public class NPCController : MonoBehaviour, Interactable
     {
         Debug.Log("Interact with NPC!!!!!");
         StartCoroutine(DialogManager.Instance.ShowDialog(dialog));
+        switch (id)
+        {
+            case "abby":
+            {
+                
+                break;
+            }
+            case "jack":
+            {
+                
+                break;
+            }
+            case "lilly":
+            {
+                
+                break;
+            }
+            case "martha":
+            {
+                
+                break;
+            }
+            case "mason":
+            {
+                
+                break;
+            }
+            case "millie":
+            {
+                
+                break;
+            }
+        }
     }
 }
