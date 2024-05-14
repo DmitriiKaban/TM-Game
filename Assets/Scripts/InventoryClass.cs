@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public struct Inventory
 {
@@ -21,7 +22,7 @@ public struct Inventory
     public int AmethystAmount;
     public int AmethystShapedAmount;
 
-    public int Space => DiamondAmount + GoldAmount + SilverAmount + AmethystAmount + EmeraldAmount + RubyAmount +
+    public int Space => DiamondAmount + GoldAmount*2 + SilverAmount*2 + AmethystAmount + EmeraldAmount + RubyAmount +
                         SapphireAmount;
 
     public int MaxSpace;
@@ -101,107 +102,13 @@ public class Jewelry
     }
 }
 
-public static class JewelryStockClass
-{
-    public static List<Jewelry> AllJewelries;
-    public static List<int> AllPrices = new List<int>()
-        {100, 80, 70, 70, 60, 75, 65, 55, 55, 50, 50, 45, 40, 40, 35, 40, 35, 30, 30, 25, 75, 65, 60, 60, 55, 60, 55, 50, 50, 45};
 
-    public static int GetPrice(Ore ore, Gem gem, JewelryType jewelryType)
-    {
-        foreach (var jew in AllJewelries)
-        {
-            if (jew.GetOre() == ore && jew.GetGem() == gem && jew.GetJewelryType() == jewelryType)
-                return jew.GetPrice();
-        }
-
-        return -1;
-    }
-}
-
-public class JewelryStock : MonoBehaviour
-{
-    private void Awake()
-    {
-      /*  JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-        JewelryStockClass.AllJewelries.Add
-            (new Jewelry("gdn", 100, Ore.Gold, Gem.Diamond, JewelryType.Necklace));
-            */
-      for (int i = 0; i < 2; i++)
-      {
-          for (int j = 0; j < 5; j++)
-          {
-              for (int k = 0; k < 3; k++)
-              {
-                  JewelryStockClass.AllJewelries.Add(new Jewelry(i+j+k, JewelryStockClass.AllPrices[i+j+k], (Ore)i, (Gem)j, (JewelryType)k));
-              }
-          }
-      }
-    }
-}
 public class InventoryClass : MonoBehaviour
 {
     private Inventory inventory;
 
     private List<Jewelry> availableJewelry = new List<Jewelry>();
-
+    [SerializeField] private List<Text> texts; 
     private JP lastPiece;
     private Gem currentGem;
     private Ore currentOre;
@@ -213,10 +120,32 @@ public class InventoryClass : MonoBehaviour
         currentOre = Ore.Gold;
         currentGem = Gem.Diamond;
         currentType = JewelryType.Necklace;
-        inventory = new Inventory
+       // Debug.Log(JewelryStock.GetPrice(currentOre,currentGem,currentType));
+      // Debug.Log(JewelryStockClass.AllJewelries.Count); 
+       inventory = new Inventory
         {
-            MaxSpace = 10
+            MaxSpace = 15
         };
+        UpdateTexts();
+    }
+
+    private void UpdateTexts()
+    {
+        texts[0].text = inventory.SilverAmount.ToString();
+        texts[1].text = inventory.GoldAmount.ToString();
+        texts[2].text = inventory.DiamondAmount.ToString();
+        texts[3].text = inventory.RubyAmount.ToString();
+        texts[4].text = inventory.SapphireAmount.ToString();
+        texts[5].text = inventory.EmeraldAmount.ToString();
+        texts[6].text = inventory.AmethystAmount.ToString();
+        texts[7].text = inventory.SilverIngotsAmount.ToString();
+        texts[8].text = inventory.GoldIngotsAmount.ToString();
+        texts[9].text = inventory.DiamondShapedAmount.ToString();
+        texts[10].text = inventory.RubyShapedAmount.ToString();
+        texts[11].text = inventory.SapphireShapedAmount.ToString();
+        texts[12].text = inventory.EmeraldShapedAmount.ToString();
+        texts[13].text = inventory.AmethystShapedAmount.ToString();
+        texts[14].text = inventory.Space + "/" + inventory.MaxSpace;
     }
 
     public void Dig(char c)
@@ -266,7 +195,7 @@ public class InventoryClass : MonoBehaviour
                 }
                 break;
         }
-
+        UpdateTexts();
     }
 
     public void Sell(Jewelry jew)
@@ -330,7 +259,7 @@ public class InventoryClass : MonoBehaviour
     public void CraftJew()
     {
         {
-            Jewelry jew = new Jewelry(-1, JewelryStockClass.GetPrice(currentOre, currentGem, currentType), currentOre, currentGem, currentType);
+            Jewelry jew = new Jewelry(-1, JewelryStock.GetPrice(currentOre, currentGem, currentType), currentOre, currentGem, currentType);
             switch (currentType)
             {
                 case JewelryType.Necklace:
@@ -357,6 +286,7 @@ public class InventoryClass : MonoBehaviour
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            UpdateTexts();
         }
     }
     public void Craft()
@@ -418,6 +348,7 @@ public class InventoryClass : MonoBehaviour
                 }
                 break;
         }
+        UpdateTexts();
     }
 
     private int GetGemAmount(Gem gem)
