@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         
         if (!isMoving)
         {
-            Debug.Log("not");
+//            Debug.Log("not");
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");   
 
