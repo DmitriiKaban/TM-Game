@@ -110,6 +110,7 @@ public class InventoryClass : MonoBehaviour
     private List<Jewelry> availableJewelry = new List<Jewelry>();
     [SerializeField] private List<Text> texts; 
     private JP lastPiece;
+    private Jewelry currentJew;
     private Gem currentGem;
     private Ore currentOre;
     private JewelryType currentType;
@@ -146,6 +147,7 @@ public class InventoryClass : MonoBehaviour
         texts[12].text = inventory.EmeraldShapedAmount.ToString();
         texts[13].text = inventory.AmethystShapedAmount.ToString();
         texts[14].text = inventory.Space + "/" + inventory.MaxSpace;
+        texts[15].text = inventory.Money.ToString();
     }
 
     public void Dig(char c)
@@ -198,13 +200,189 @@ public class InventoryClass : MonoBehaviour
         UpdateTexts();
     }
 
-    public void Sell(Jewelry jew)
+    public void SellAbby(int n)
     {
-        if (availableJewelry.Contains(jew))
+        Jewelry jew = null;
+        switch (n)
         {
-            availableJewelry.Remove(jew);
-            inventory.Money += jew.GetPrice();
-        }   
+            case 0:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Amethyst, JewelryType.Earrings), Ore.Silver, Gem.Amethyst, JewelryType.Earrings);
+                break;
+            case 1:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Amethyst, JewelryType.Earrings), Ore.Gold, Gem.Amethyst, JewelryType.Earrings);
+                break;
+            case 2:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Amethyst, JewelryType.Necklace), Ore.Silver, Gem.Amethyst, JewelryType.Necklace);
+                break;
+            case 3:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Amethyst, JewelryType.Necklace), Ore.Gold, Gem.Amethyst, JewelryType.Necklace);
+                break;
+            case 4:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Amethyst, JewelryType.Ring), Ore.Silver, Gem.Amethyst, JewelryType.Ring);
+                break;
+            case 5:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Amethyst, JewelryType.Ring), Ore.Gold, Gem.Amethyst, JewelryType.Ring);
+                break;
+        }
+
+        currentJew = jew;
+    }
+    public void SellJack(int n)
+    {
+        Jewelry jew = null;
+        switch (n)
+        {
+            case 0:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Amethyst, JewelryType.Ring), Ore.Silver, Gem.Amethyst, JewelryType.Ring);
+                break;
+            case 1:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Amethyst, JewelryType.Ring), Ore.Gold, Gem.Amethyst, JewelryType.Ring);
+                break;
+            case 2:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Diamond, JewelryType.Ring), Ore.Silver, Gem.Diamond, JewelryType.Ring);
+                break;
+            case 3:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Diamond, JewelryType.Ring), Ore.Gold, Gem.Diamond, JewelryType.Ring);
+                break;
+            case 4:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Ruby, JewelryType.Ring), Ore.Silver, Gem.Ruby, JewelryType.Ring);
+                break;
+            case 5:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Ruby, JewelryType.Ring), Ore.Gold, Gem.Ruby, JewelryType.Ring);
+                break;
+            case 6:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Sapphire, JewelryType.Ring), Ore.Silver, Gem.Sapphire, JewelryType.Ring);
+                break;
+            case 7:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Sapphire, JewelryType.Ring), Ore.Gold, Gem.Sapphire, JewelryType.Ring);
+                break;
+            case 8:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Emerald, JewelryType.Ring), Ore.Silver, Gem.Emerald, JewelryType.Ring);
+                break;
+            case 9:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Emerald, JewelryType.Ring), Ore.Gold, Gem.Emerald, JewelryType.Ring);
+                break;
+        }
+
+        currentJew = jew;
+    }
+    public void SellLilly(int n)
+    {
+        Jewelry jew = null;
+        switch (n)
+        {
+            case 0:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Ruby, JewelryType.Earrings), Ore.Silver, Gem.Amethyst, JewelryType.Earrings);
+                break;
+            case 1:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Sapphire, JewelryType.Necklace), Ore.Gold, Gem.Sapphire, JewelryType.Necklace);
+                break;
+            case 2:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Amethyst, JewelryType.Necklace), Ore.Silver, Gem.Amethyst, JewelryType.Necklace);
+                break;
+            case 3:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Emerald, JewelryType.Necklace), Ore.Gold, Gem.Emerald, JewelryType.Necklace);
+                break;
+            case 4:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Emerald, JewelryType.Ring), Ore.Silver, Gem.Emerald, JewelryType.Ring);
+                break;
+            case 5:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Ruby, JewelryType.Ring), Ore.Gold, Gem.Ruby, JewelryType.Ring);
+                break;
+        }
+
+        currentJew = jew;
+    } 
+    public void SellMartha(int n)
+    {
+        Jewelry jew = null;
+        switch (n)
+        {
+            case 0:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Ruby, JewelryType.Earrings), Ore.Gold, Gem.Amethyst, JewelryType.Earrings);
+                break;
+            case 1:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Sapphire, JewelryType.Necklace), Ore.Silver, Gem.Sapphire, JewelryType.Necklace);
+                break;
+            case 2:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Amethyst, JewelryType.Necklace), Ore.Gold, Gem.Amethyst, JewelryType.Necklace);
+                break;
+            case 3:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Emerald, JewelryType.Necklace), Ore.Silver, Gem.Emerald, JewelryType.Necklace);
+                break;
+            case 4:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Emerald, JewelryType.Ring), Ore.Gold, Gem.Emerald, JewelryType.Ring);
+                break;
+            case 5:
+                jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Ruby, JewelryType.Ring), Ore.Silver, Gem.Ruby, JewelryType.Ring);
+                break;
+        }
+
+        currentJew = jew;
+    }
+    
+    public void SellMillie(int n)
+    {
+        Jewelry jew = null;
+        switch (n)
+        {
+            case 0:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Emerald, JewelryType.Earrings), Ore.Silver, Gem.Emerald, JewelryType.Earrings);
+                break;
+            case 1:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Emerald, JewelryType.Earrings), Ore.Gold, Gem.Emerald, JewelryType.Earrings);
+                break;
+            case 2:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Diamond, JewelryType.Earrings), Ore.Silver, Gem.Diamond, JewelryType.Earrings);
+                break;
+            case 3:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Diamond, JewelryType.Earrings), Ore.Gold, Gem.Diamond, JewelryType.Earrings);
+                break;
+            case 4:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Ruby, JewelryType.Earrings), Ore.Silver, Gem.Ruby, JewelryType.Earrings);
+                break;
+            case 5:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Ruby, JewelryType.Earrings), Ore.Gold, Gem.Ruby, JewelryType.Earrings);
+                break;
+            case 6:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Sapphire, JewelryType.Earrings), Ore.Silver, Gem.Sapphire, JewelryType.Earrings);
+                break;
+            case 7:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Sapphire, JewelryType.Earrings), Ore.Gold, Gem.Sapphire, JewelryType.Earrings);
+                break;
+            case 8:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Ruby, JewelryType.Necklace), Ore.Silver, Gem.Ruby, JewelryType.Necklace);
+                break;
+            case 9:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Ruby, JewelryType.Necklace), Ore.Gold, Gem.Ruby, JewelryType.Necklace);
+                break;
+            case 10:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Silver, Gem.Diamond, JewelryType.Necklace), Ore.Silver, Gem.Diamond, JewelryType.Necklace);
+                break;
+            case 11:
+                 jew = new Jewelry(-1, JewelryStock.GetPrice(Ore.Gold, Gem.Diamond, JewelryType.Necklace), Ore.Gold, Gem.Diamond, JewelryType.Necklace);
+                break;
+        }
+
+        currentJew = jew;
+    }
+
+    public void Sell()
+    {
+        Debug.Log(currentJew.GetOre().ToString() + currentJew.GetGem() + currentJew.GetJewelryType());
+        var aj = new List<Jewelry>(availableJewelry);
+        foreach (var jew in aj)
+        {
+            if (jew.GetOre() == currentJew.GetOre() && jew.GetGem() == currentJew.GetGem() &&
+                jew.GetJewelryType() == currentJew.GetJewelryType())
+            {
+                availableJewelry.Remove(jew);
+                inventory.Money += jew.GetPrice();
+                UpdateTexts();
+                break;
+            }
+            
+        }
     }
 
     public void Choise(int n)
@@ -267,6 +445,7 @@ public class InventoryClass : MonoBehaviour
                     {
                         RemovePieces(jew);
                         availableJewelry.Add(jew);
+                        Debug.Log(currentOre.ToString() +currentGem +currentType);
                     }
                     break;
                 case JewelryType.Ring:
@@ -274,6 +453,7 @@ public class InventoryClass : MonoBehaviour
                     {
                         RemovePieces(jew);
                         availableJewelry.Add(jew);
+                        Debug.Log(currentOre.ToString() +currentGem +currentType);
                     }
                     break;
                 case JewelryType.Earrings:
@@ -281,6 +461,7 @@ public class InventoryClass : MonoBehaviour
                     {
                         RemovePieces(jew);
                         availableJewelry.Add(jew);
+                        Debug.Log(currentOre.ToString() +currentGem +currentType);
                     }
                     break;
                 default:

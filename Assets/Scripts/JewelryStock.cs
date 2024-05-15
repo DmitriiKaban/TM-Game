@@ -84,7 +84,7 @@ public class JewelryStock : MonoBehaviour
                 for (int k = 0; k < 3; k++)
                 {
                    
-                    JewelryStockClass.AllJewelries.Add(new Jewelry(i+j+k, JewelryStockClass.AllPrices[i+j+k], (Ore)i, (Gem)j, (JewelryType)k));
+                    JewelryStockClass.AllJewelries.Add(new Jewelry(-1, JewelryStockClass.AllPrices[i+j+k], (Ore)i, (Gem)j, (JewelryType)k));
                 }
             }
         }

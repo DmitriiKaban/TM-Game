@@ -65,4 +65,11 @@ public class DialogManager : MonoBehaviour
 
         isTyping = false;
     }
+
+    public IEnumerator HideDialog()
+    {
+        dialogBox.SetActive(false);
+        Debug.Log("asd");
+        yield return null;
+    }
 }
