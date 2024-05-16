@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -111,12 +112,16 @@ public class InventoryClass : MonoBehaviour
     [SerializeField] private List<Text> texts; 
     private JP lastPiece;
     private Jewelry currentJew;
+    private Jewelry lastJew;
     private Gem currentGem;
     private Ore currentOre;
     private JewelryType currentType;
+
+    private int gap;
     // Start is called before the first frame update
     void Start()
     {
+        gap = 0;
         lastPiece = JP.Gold;
         currentOre = Ore.Gold;
         currentGem = Gem.Diamond;
@@ -376,9 +381,22 @@ public class InventoryClass : MonoBehaviour
             if (jew.GetOre() == currentJew.GetOre() && jew.GetGem() == currentJew.GetGem() &&
                 jew.GetJewelryType() == currentJew.GetJewelryType())
             {
+                if(lastJew != null)
+                    if (jew.GetOre() == lastJew.GetOre() && jew.GetGem() == lastJew.GetGem() &&
+                        jew.GetJewelryType() == lastJew.GetJewelryType())
+                    {
+                        Debug.Log("EQUALS");
+                        gap = math.min(gap + 5, 30);
+                        inventory.Money -= gap;
+                    }
+                    else
+                    {
+                        gap = 0;
+                    }
                 availableJewelry.Remove(jew);
                 inventory.Money += jew.GetPrice();
                 UpdateTexts();
+                lastJew = jew;
                 break;
             }
             
