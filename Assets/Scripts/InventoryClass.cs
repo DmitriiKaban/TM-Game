@@ -108,8 +108,9 @@ public class InventoryClass : MonoBehaviour
 {
     private Inventory inventory;
 
-    private List<Jewelry> availableJewelry = new List<Jewelry>();
-    [SerializeField] private List<Text> texts; 
+    private List<Jewelry> availableJewelry = new();
+    [SerializeField] private List<Text> texts;     
+    Dictionary<string, int> soldJewelry = new();
     private JP lastPiece;
     private Jewelry currentJew;
     private Jewelry lastJew;
@@ -381,6 +382,9 @@ public class InventoryClass : MonoBehaviour
             if (jew.GetOre() == currentJew.GetOre() && jew.GetGem() == currentJew.GetGem() &&
                 jew.GetJewelryType() == currentJew.GetJewelryType())
             {
+                double price = jew.GetPrice();
+                string currentKey = currentJew.GetOre().ToString() + currentJew.GetGem() + currentJew.GetJewelryType();
+                
                 if(lastJew != null)
                     if (jew.GetOre() == lastJew.GetOre() && jew.GetGem() == lastJew.GetGem() &&
                         jew.GetJewelryType() == lastJew.GetJewelryType())
@@ -394,7 +398,29 @@ public class InventoryClass : MonoBehaviour
                         gap = 0;
                     }
                 availableJewelry.Remove(jew);
-                inventory.Money += jew.GetPrice();
+                
+                if (soldJewelry.ContainsKey(currentKey))
+                {
+                    int value = soldJewelry[
+                        currentJew.GetOre().ToString() + currentJew.GetGem() + currentJew.GetJewelryType()];
+                    if (value > 6)
+                    {
+                        price = jew.GetPrice() * 0.8;
+                    } else if (value > 3)
+                    {
+                        price = jew.GetPrice();
+                    }
+                    else
+                    {
+                        price = jew.GetPrice() * 1.2;
+                    }
+                    soldJewelry.Add(currentKey, value + 1);
+                }
+                else
+                {
+                    soldJewelry.Add(currentKey, 1);
+                }
+                inventory.Money += Convert.ToInt32(price);
                 UpdateTexts();
                 lastJew = jew;
                 break;
